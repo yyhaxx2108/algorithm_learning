@@ -12,11 +12,31 @@ const sortTestHelper = {
       rangeL = rangeR;
       rangeR = tempC
     }
-    let arr = new Array(n);
+    let arr = new Array(n)
     for (let i = 0; i < n; i++) {
       arr[i] = Math.round(Math.random() * (rangeR - rangeL)) + rangeL
     }
-    return arr;
+    return arr
+  },
+
+  /**
+   * 生成近乎有序的数组
+   * @param {Integer} n 
+   * @param {Interger} swapTimes 
+   */
+  generateNearlyRandomArray(n, swapTimes) {
+    let arr = new Array(n)
+    for(let i = 0; i < n; i++) {
+      arr[i] = i
+    }
+    for(let i =0; i < swapTimes; i++) {
+      let x = Math.round(Math.random() * n)
+      let y = Math.round(Math.random() * n)
+      let tempC = arr[x]
+      arr[x] = arr[y]
+      arr[y] = arr[x]
+    }
+    return arr
   },
 
   /**
