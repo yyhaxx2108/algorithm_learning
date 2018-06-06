@@ -1,0 +1,20 @@
+{
+  "name": "algorithm_learning",
+  "version": "1.0.0",
+  "description": "some algorithm",
+  "main": "main.js",
+  "dependencies": {},
+  "devDependencies": {
+    "cz-conventional-changelog": "^2.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "yyhaxx@163.com",
+  "license": "ISC",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
