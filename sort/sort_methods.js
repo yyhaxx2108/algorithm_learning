@@ -8,8 +8,8 @@ const sortMethods = {
     let tempC
     for(let i = 0; i < l; i++) {
       let minIndex = i
-      for(let j = i + 1; j < l; j++) {
-        if (arr[minIndex] > arr[j] ){
+      for(let j = i + 1; j < l; j++){
+        if(arr[minIndex] > arr[j] ){
           minIndex = j
         }
       }
@@ -52,6 +52,62 @@ const sortMethods = {
       arr[j] = e
     }
   },
+
+  /**
+   * 归并排序
+   * @param {Array} arr 
+   */
+  mergeSort(arr) {
+    let l = arr.length
+    _mergeSort(arr, 0, l - 1)
+
+    /**
+     * 递归
+     * @param {Array} arr 
+     * @param {Integer} l 数组左边值
+     * @param {Integer} r 数组右边值
+     */
+    function _mergeSort(arr, l, r) {
+      if(l >= r){
+        return
+      } 
+      let mid = (l + r) / 2
+      _mergeSort(arr, l, mid)
+      _mergeSort(arr, mid + 1, r)
+      _merge(arr, l, mid, r)
+    }
+  
+    /**
+     * 将排好序的左边和右边进行合并
+     * r值不一定是整数，具体原因待考察  2.0328113107745405e-16
+     * @param {Array} arr 原始数组
+     * @param {Integer} l 数组左边值
+     * @param {Integer} mid 数组中间值
+     * @param {Integer} r 数组右边值
+     */
+    function _merge(arr, l, mid, r){
+      let tempArr = new Array(parseInt(r - l + 1))
+      for(let i = l; i <= r; i++){
+        tempArr[i - l] = arr[i]
+      }
+      let i = l, j = mid + 1
+      for(let k = l; k <= r; k++){
+        if(i > mid){
+          arr[k] = tempArr[j - l];
+          j++
+        }else if(j > r){
+          arr[k] = tempArr[i - l]
+          i++
+        }else if(tempArr[i - l] < tempArr [j - l]){
+          arr[k] = tempArr[i - l]
+          i++
+        }else{
+          arr[k] = tempArr[j - l]
+          j++
+        }
+      }
+    }
+  },  
 
 }
 
