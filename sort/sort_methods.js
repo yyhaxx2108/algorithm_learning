@@ -151,10 +151,20 @@ const sortMethods = {
     }
   },
 
+  /**
+   * 快速排序
+   * @param {Array} arr 
+   */
   quickSort(arr) {
     let l = arr.length
     _quickSort(arr, 0, l - 1)
 
+    /**
+     * 通过p位置的元素对数组进行分割，并且递归的进行排序  
+     * @param {Array} arr 
+     * @param {Integer} l 
+     * @param {Integer} r 
+     */
     function _quickSort(arr, l, r) {
       if(l >= r) {
         return
@@ -164,6 +174,12 @@ const sortMethods = {
       _quickSort(arr, p + 1, r)
     }
 
+    /**
+     * 找出p的正确位置
+     * @param {Array} arr 
+     * @param {Integer} l 
+     * @param {Integer} r 
+     */
     function _partition(arr, l, r) {
       let v = arr[l]
       let j = l
@@ -181,7 +197,61 @@ const sortMethods = {
       arr[j] = tempC
       return j
     }
-  }
+  },
+
+  /**
+   * 快速排序
+   * _partition时使用一个随机位置替换第一个位置,对于近乎有序数组的优化
+   * @param {Array} arr 
+   */
+  quickSort1(arr) {
+    let l = arr.length
+    _quickSort(arr, 0, l - 1)
+
+    /**
+     * 通过p位置的元素对数组进行分割，并且递归的进行排序  
+     * @param {Array} arr 
+     * @param {Integer} l 
+     * @param {Integer} r 
+     */
+    function _quickSort(arr, l, r) {
+      if(l >= r) {
+        return
+      }
+      let p = _partition(arr, l, r)
+      _quickSort(arr, l, p - 1)
+      _quickSort(arr, p + 1, r)
+    }
+
+    /**
+     * 找出p的正确位置
+     * @param {Array} arr 
+     * @param {Integer} l 
+     * @param {Integer} r 
+     */
+    function _partition(arr, l, r) {
+      let tempC
+      let random = Math.round(Math.random() * (r - l)) + l
+      tempC = arr[l]
+      arr[l] = arr[random]
+      arr[random] = tempC           
+      let v = arr[l]
+      let j = l
+      for(let i = l + 1; i <= r; i++){
+        if(arr[i] < v){
+          tempC = arr[j + 1]
+          arr[j + 1] = arr[i]
+          arr[i] = tempC
+          j++
+        }
+      }
+      tempC = arr[l]
+      arr[l] = arr[j]
+      arr[j] = tempC
+      return j
+    }
+  },
+
 }
 
 module.exports = sortMethods
