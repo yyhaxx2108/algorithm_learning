@@ -47,7 +47,7 @@ const sortMethods = {
       let e = arr [i]
       let j
       for(j = i; j > 0 && arr[j] < arr [j - 1]; j--){
-        arr[j] = arr[j - 1]
+        arr[j - 1] = arr[j]
       }
       arr[j] = e
     }
@@ -108,6 +108,48 @@ const sortMethods = {
       }
     }
   },  
+
+  /**
+   * 不是使用递归实现归并排序
+   * @param {Array} arr 
+   */
+  mergeSortBU(arr) {
+    let l = arr.length
+    for(let sz = 1; sz <= l; sz += sz){
+      for(let i = 0; i < l; i += sz + sz){
+        _merge(arr, i, i + sz - 1, i + sz + sz -1)
+      }
+    }
+    /**
+     * 将排好序的左边和右边进行合并
+     * @param {Array} arr 原始数组
+     * @param {Integer} l 数组左边值
+     * @param {Integer} mid 数组中间值
+     * @param {Integer} r 数组右边值
+     */
+    function _merge(arr, l, mid, r){
+      let tempArr = new Array(r - l + 1)
+      for(let i = l; i <= r; i++){
+        tempArr[i - l] = arr[i]
+      }
+      let i = l, j = mid + 1
+      for(let k = l; k <= r; k++){
+        if(i > mid){
+          arr[k] = tempArr[j - l];
+          j++
+        }else if(j > r){
+          arr[k] = tempArr[i - l]
+          i++
+        }else if(tempArr[i - l] < tempArr [j - l]){
+          arr[k] = tempArr[i - l]
+          i++
+        }else{
+          arr[k] = tempArr[j - l]
+          j++
+        }
+      }
+    }
+  }
 
 }
 
