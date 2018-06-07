@@ -35,7 +35,6 @@ const sortMethods = {
     }
   },
 
-
   /**
    * 插入排序(优化)
    * 减少赋值操作
@@ -46,7 +45,7 @@ const sortMethods = {
     for(let i = 1; i < l; i++){
       let e = arr [i]
       let j
-      for(j = i; j > 0 && arr[j] < arr [j - 1]; j--){
+      for(j = i; j > 0 && e < arr [j - 1]; j--){
         arr[j] = arr[j - 1]
       }
       arr[j] = e
@@ -109,6 +108,80 @@ const sortMethods = {
     }
   },  
 
+  /**
+   * 不是使用递归实现归并排序
+   * 自底想上归并排序
+   * @param {Array} arr 
+   */
+  mergeSortBU(arr) {
+    let l = arr.length
+    for(let sz = 1; sz <= l; sz += sz){
+      for(let i = 0; i + sz < l; i += sz + sz){
+        _merge(arr, i, i + sz - 1, Math.min(i + sz + sz -1, l - 1))
+      }
+    }
+    /**
+     * 将排好序的左边和右边进行合并
+     * @param {Array} arr 原始数组
+     * @param {Integer} l 数组左边值
+     * @param {Integer} mid 数组中间值
+     * @param {Integer} r 数组右边值
+     */
+    function _merge(arr, l, mid, r){
+      let tempArr = new Array(r - l + 1)
+      for(let i = l; i <= r; i++){
+        tempArr[i - l] = arr[i]
+      }
+      let i = l, j = mid + 1
+      for(let k = l; k <= r; k++){
+        if(i > mid){
+          arr[k] = tempArr[j - l];
+          j++
+        }else if(j > r){
+          arr[k] = tempArr[i - l]
+          i++
+        }else if(tempArr[i - l] < tempArr [j - l]){
+          arr[k] = tempArr[i - l]
+          i++
+        }else{
+          arr[k] = tempArr[j - l]
+          j++
+        }
+      }
+    }
+  },
+
+  quickSort(arr) {
+    let l = arr.length
+    _quickSort(arr, 0, l - 1)
+
+    function _quickSort(arr, l, r) {
+      if(l >= r) {
+        return
+      }
+      let p = _partition(arr, l, r)
+      _quickSort(arr, l, p - 1)
+      _quickSort(arr, p + 1, r)
+    }
+
+    function _partition(arr, l, r) {
+      let v = arr[l]
+      let j = l
+      let tempC
+      for(let i = l + 1; i <= r; i++){
+        if(arr[i] < v){
+          tempC = arr[j + 1]
+          arr[j + 1] = arr[i]
+          arr[i] = tempC
+          j++
+        }
+      }
+      tempC = arr[l]
+      arr[l] = arr[j]
+      arr[j] = tempC
+      return j
+    }
+  }
 }
 
 module.exports = sortMethods
