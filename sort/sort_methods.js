@@ -63,6 +63,7 @@ const sortMethods = {
 
     /**
      * 递归
+     * mid值应该取整数，否则会造成_merge函数中r值不为整数的bug
      * @param {Array} arr 
      * @param {Integer} l 数组左边值
      * @param {Integer} r 数组右边值
@@ -71,7 +72,7 @@ const sortMethods = {
       if(l >= r){
         return
       } 
-      let mid = (l + r) / 2
+      let mid = Math.floor((l + r) / 2)
       _mergeSort(arr, l, mid)
       _mergeSort(arr, mid + 1, r)
       _merge(arr, l, mid, r)
@@ -79,14 +80,13 @@ const sortMethods = {
   
     /**
      * 将排好序的左边和右边进行合并
-     * r值不一定是整数，具体原因待考察  2.0328113107745405e-16
      * @param {Array} arr 原始数组
      * @param {Integer} l 数组左边值
      * @param {Integer} mid 数组中间值
      * @param {Integer} r 数组右边值
      */
     function _merge(arr, l, mid, r){
-      let tempArr = new Array(parseInt(r - l + 1))
+      let tempArr = new Array(r - l + 1)
       for(let i = l; i <= r; i++){
         tempArr[i - l] = arr[i]
       }
