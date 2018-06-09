@@ -252,6 +252,54 @@ const sortMethods = {
     }
   },
 
+  /**
+   * 快速排序
+   * 对有大量相同元素的数组进行了优化
+   * @param {Array} arr 
+   */
+  quickSort2(arr) {
+    let l = arr.length
+    _quickSort(arr, 0, l - 1)
+    function _quickSort(arr, l, r) {
+      if(l >= r){
+        return
+      }
+      let p = _partition(arr, l, r)
+      _quickSort(arr, l, p - 1)
+      _quickSort(arr, p + 1, r)
+    }
+    function _partition(arr, l, r) {
+      let tempC
+      let random = Math.round(Math.random() * (r - l)) + l
+      tempC = arr[l]
+      arr[l] = arr[random]
+      arr[random] = tempC   
+      let v = arr[l]
+      let i = l + 1, j = r
+      while(true){
+        while (i <= r && arr[i] < v){
+          i++
+        }
+        while (j >= l + 1 && arr[j] > v){
+          j--
+        }
+        if(i > j){
+          break
+        }else {
+          tempC = arr[i]
+          arr[i] = arr[j]
+          arr[j] = tempC
+          i++
+          j--
+        }
+      }
+      tempC = arr[l]
+      arr[l] = arr[j]
+      arr[j] = tempC
+      return j
+    }
+  }
+
 }
 
 module.exports = sortMethods
