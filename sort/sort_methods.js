@@ -298,6 +298,47 @@ const sortMethods = {
       arr[j] = tempC
       return j
     }
+  },
+
+  /**
+   * 三路快排
+   * @param {Array} arr 
+   */
+  quickSort3(arr) {
+    let l = arr.length
+    
+    /**
+     * 注意边界条件
+     */
+    _quickSort(arr, 0, l - 1)
+    function _quickSort(arr, l, r) {
+      if(l >= r){
+        return
+      }
+      let tempC
+      let v = arr[l], lt = l, gt = r + 1, i = l + 1
+      while (i < gt) {
+        if(arr[i] < v) {
+          tempC = arr[i]
+          arr[i] = arr[lt + 1]
+          arr[lt + 1] = tempC
+          lt++
+          i++
+        }else if (arr[i] > v) {
+          tempC = arr[i]
+          arr[i] = arr[gt - 1]
+          arr[gt - 1] = tempC
+          gt--
+        }else {
+          i++
+        }
+      }
+      tempC = arr[l]
+      arr[l] = arr[lt]
+      arr[lt] = tempC
+      _quickSort(arr, l, lt - 1)  
+      _quickSort(arr, gt, r)  
+    }
   }
 
 }
