@@ -58,7 +58,7 @@ const sortMethods = {
    * @param {Array} arr 
    */
   mergeSort(arr) {
-    let l = arr.length
+    const l = arr.length
     _mergeSort(arr, 0, l - 1)
 
     /**
@@ -98,7 +98,7 @@ const sortMethods = {
         }else if(j > r){
           arr[k] = tempArr[i - l]
           i++
-        }else if(tempArr[i - l] < tempArr [j - l]){
+        }else if(tempArr[i - l] < tempArr[j - l]){
           arr[k] = tempArr[i - l]
           i++
         }else{
@@ -108,6 +108,41 @@ const sortMethods = {
       }
     }
   },  
+
+  /**
+   * 快速排序
+   * @param {Array} arr 
+   */
+  quickSort(arr){
+    _quickSort(arr, 0, arr.length - 1)
+
+    function _quickSort(arr, l, r){
+      if(l >= r){
+        return 
+      }
+      const p = _partintion(arr, l, r)
+      _quickSort(arr, l, p - 1)
+      _quickSort(arr, p + 1, r)
+    }
+
+    function _partintion(arr, l, r){
+      const v = arr[l]
+      const length = arr.length
+      let j = l
+      let temp, i
+      for(i = l + 1; i < length; i++){
+        if(arr[i] < v) {
+          temp = arr[j + 1]
+          arr[j + 1] = arr[i]
+          arr[i] = temp
+          j++
+        }
+      }
+      arr[l] = arr[j]
+      arr[j] = v
+      return j
+    }
+  }
 
 }
 
