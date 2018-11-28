@@ -1,3 +1,5 @@
+const maxHeap = require('../heap/maxHeap.js')
+
 const sortMethods = {
   /**
  * 冒泡排序 
@@ -351,6 +353,18 @@ const sortMethods = {
       arr[lt] = tempC
       _quickSort(arr, l, lt - 1)
       _quickSort(arr, gt, r)
+    }
+  },
+
+  /**
+   * 堆排序
+   * @param {Array} arr 
+   */
+  heapSort(arr){
+    const l = arr.length - 1
+    let heaps = new maxHeap(arr)
+    for(let i = l ; i >= 0; i--){
+      arr[i] = heaps.pop()
     }
   }
 }
