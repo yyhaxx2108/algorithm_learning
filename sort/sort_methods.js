@@ -1,15 +1,30 @@
 const sortMethods = {
   /**
+ * 冒泡排序 
+ * @param {Array} arr 待排序的数组
+ */
+  bubbleSort(arr) {
+    let l = arr.length
+    for (let i = 0; i < l; i++) {
+      for (let k = 0; k < l - i; k++) {
+        if (arr[k] > arr[k + 1]) {
+          [arr[k], arr[k + 1]] = [arr[k + 1], arr[k]];
+        }
+      }
+    }
+  },
+
+  /**
    * 选择排序 
    * @param {Array} arr 待排序的数组
    */
   selectionSort(arr) {
     let l = arr.length
     let tempC
-    for(let i = 0; i < l; i++) {
+    for (let i = 0; i < l; i++) {
       let minIndex = i
-      for(let j = i + 1; j < l; j++){
-        if(arr[minIndex] > arr[j] ){
+      for (let j = i + 1; j < l; j++) {
+        if (arr[minIndex] > arr[j]) {
           minIndex = j
         }
       }
@@ -26,9 +41,9 @@ const sortMethods = {
   insertionSort(arr) {
     let l = arr.length
     let tempC
-    for(let i = 1; i < l; i++){
-      for(let j = i; j > 0 && arr[j] < arr [j - 1]; j--){
-        tempC = arr [j]
+    for (let i = 1; i < l; i++) {
+      for (let j = i; j > 0 && arr[j] < arr[j - 1]; j--) {
+        tempC = arr[j]
         arr[j] = arr[j - 1]
         arr[j - 1] = tempC
       }
@@ -42,10 +57,10 @@ const sortMethods = {
    */
   insertionSort1(arr) {
     let l = arr.length
-    for(let i = 1; i < l; i++){
-      let e = arr [i]
+    for (let i = 1; i < l; i++) {
+      let e = arr[i]
       let j
-      for(j = i; j > 0 && e < arr [j - 1]; j--){
+      for (j = i; j > 0 && e < arr[j - 1]; j--) {
         arr[j] = arr[j - 1]
       }
       arr[j] = e
@@ -68,15 +83,15 @@ const sortMethods = {
      * @param {Integer} r 数组右边值
      */
     function _mergeSort(arr, l, r) {
-      if(l >= r){
+      if (l >= r) {
         return
-      } 
+      }
       let mid = Math.floor((l + r) / 2)
       _mergeSort(arr, l, mid)
       _mergeSort(arr, mid + 1, r)
       _merge(arr, l, mid, r)
     }
-  
+
     /**
      * 将排好序的左边和右边进行合并
      * @param {Array} arr 原始数组
@@ -84,29 +99,29 @@ const sortMethods = {
      * @param {Integer} mid 数组中间值
      * @param {Integer} r 数组右边值
      */
-    function _merge(arr, l, mid, r){
+    function _merge(arr, l, mid, r) {
       let tempArr = new Array(r - l + 1)
-      for(let i = l; i <= r; i++){
+      for (let i = l; i <= r; i++) {
         tempArr[i - l] = arr[i]
       }
       let i = l, j = mid + 1
-      for(let k = l; k <= r; k++){
-        if(i > mid){
+      for (let k = l; k <= r; k++) {
+        if (i > mid) {
           arr[k] = tempArr[j - l];
           j++
-        }else if(j > r){
+        } else if (j > r) {
           arr[k] = tempArr[i - l]
           i++
-        }else if(tempArr[i - l] < tempArr[j - l]){
+        } else if (tempArr[i - l] < tempArr[j - l]) {
           arr[k] = tempArr[i - l]
           i++
-        }else{
+        } else {
           arr[k] = tempArr[j - l]
           j++
         }
       }
     }
-  },  
+  },
 
   /**
    * 不是使用递归实现归并排序
@@ -115,9 +130,9 @@ const sortMethods = {
    */
   mergeSortBU(arr) {
     let l = arr.length
-    for(let sz = 1; sz <= l; sz += sz){
-      for(let i = 0; i + sz < l; i += sz + sz){
-        _merge(arr, i, i + sz - 1, Math.min(i + sz + sz -1, l - 1))
+    for (let sz = 1; sz <= l; sz += sz) {
+      for (let i = 0; i + sz < l; i += sz + sz) {
+        _merge(arr, i, i + sz - 1, Math.min(i + sz + sz - 1, l - 1))
       }
     }
     /**
@@ -127,23 +142,23 @@ const sortMethods = {
      * @param {Integer} mid 数组中间值
      * @param {Integer} r 数组右边值
      */
-    function _merge(arr, l, mid, r){
+    function _merge(arr, l, mid, r) {
       let tempArr = new Array(r - l + 1)
-      for(let i = l; i <= r; i++){
+      for (let i = l; i <= r; i++) {
         tempArr[i - l] = arr[i]
       }
       let i = l, j = mid + 1
-      for(let k = l; k <= r; k++){
-        if(i > mid){
+      for (let k = l; k <= r; k++) {
+        if (i > mid) {
           arr[k] = tempArr[j - l];
           j++
-        }else if(j > r){
+        } else if (j > r) {
           arr[k] = tempArr[i - l]
           i++
-        }else if(tempArr[i - l] < tempArr [j - l]){
+        } else if (tempArr[i - l] < tempArr[j - l]) {
           arr[k] = tempArr[i - l]
           i++
-        }else{
+        } else {
           arr[k] = tempArr[j - l]
           j++
         }
@@ -166,7 +181,7 @@ const sortMethods = {
      * @param {Integer} r 
      */
     function _quickSort(arr, l, r) {
-      if(l >= r) {
+      if (l >= r) {
         return
       }
       let p = _partition(arr, l, r)
@@ -184,8 +199,8 @@ const sortMethods = {
       let v = arr[l]
       let j = l
       let tempC
-      for(let i = l + 1; i <= r; i++){
-        if(arr[i] < v){
+      for (let i = l + 1; i <= r; i++) {
+        if (arr[i] < v) {
           tempC = arr[j + 1]
           arr[j + 1] = arr[i]
           arr[i] = tempC
@@ -215,7 +230,7 @@ const sortMethods = {
      * @param {Integer} r 
      */
     function _quickSort(arr, l, r) {
-      if(l >= r) {
+      if (l >= r) {
         return
       }
       let p = _partition(arr, l, r)
@@ -234,11 +249,11 @@ const sortMethods = {
       let random = Math.round(Math.random() * (r - l)) + l
       tempC = arr[l]
       arr[l] = arr[random]
-      arr[random] = tempC           
+      arr[random] = tempC
       let v = arr[l]
       let j = l
-      for(let i = l + 1; i <= r; i++){
-        if(arr[i] < v){
+      for (let i = l + 1; i <= r; i++) {
+        if (arr[i] < v) {
           tempC = arr[j + 1]
           arr[j + 1] = arr[i]
           arr[i] = tempC
@@ -261,7 +276,7 @@ const sortMethods = {
     let l = arr.length
     _quickSort(arr, 0, l - 1)
     function _quickSort(arr, l, r) {
-      if(l >= r){
+      if (l >= r) {
         return
       }
       let p = _partition(arr, l, r)
@@ -273,19 +288,19 @@ const sortMethods = {
       let random = Math.round(Math.random() * (r - l)) + l
       tempC = arr[l]
       arr[l] = arr[random]
-      arr[random] = tempC   
+      arr[random] = tempC
       let v = arr[l]
       let i = l + 1, j = r
-      while(true){
-        while (i <= r && arr[i] < v){
+      while (true) {
+        while (i <= r && arr[i] < v) {
           i++
         }
-        while (j >= l + 1 && arr[j] > v){
+        while (j >= l + 1 && arr[j] > v) {
           j--
         }
-        if(i > j){
+        if (i > j) {
           break
-        }else {
+        } else {
           tempC = arr[i]
           arr[i] = arr[j]
           arr[j] = tempC
@@ -306,36 +321,36 @@ const sortMethods = {
    */
   quickSort3(arr) {
     let l = arr.length
-  
+
     // 注意边界条件
     _quickSort(arr, 0, l - 1)
     function _quickSort(arr, l, r) {
-      if(l >= r){
+      if (l >= r) {
         return
       }
       let tempC
       let v = arr[l], lt = l, gt = r + 1, i = l + 1
       while (i < gt) {
-        if(arr[i] < v) {
+        if (arr[i] < v) {
           tempC = arr[i]
           arr[i] = arr[lt + 1]
           arr[lt + 1] = tempC
           lt++
           i++
-        }else if (arr[i] > v) {
+        } else if (arr[i] > v) {
           tempC = arr[i]
           arr[i] = arr[gt - 1]
           arr[gt - 1] = tempC
           gt--
-        }else {
+        } else {
           i++
         }
       }
       tempC = arr[l]
       arr[l] = arr[lt]
       arr[lt] = tempC
-      _quickSort(arr, l, lt - 1)  
-      _quickSort(arr, gt, r)  
+      _quickSort(arr, l, lt - 1)
+      _quickSort(arr, gt, r)
     }
   }
 }
