@@ -387,6 +387,40 @@ const sortMethods = {
     for (let i = l; i >= 0; i--) {
       arr[i] = heaps.pop()
     }
+  },
+
+  /**
+   * 原地堆排序
+   * @param {Array} arr 
+   */
+  heapSort1(arr) {
+    const l = arr.length
+    const hl = Math.floor(l / 2) - 1
+    for(let i = hl; i >= 0; i--){
+      _shiftDown(arr, l, i)
+    }
+    let temp
+    for(let i = l - 1; i > 0; i--){
+      temp = arr[i]
+      arr[i] = arr[0]
+      arr[0] = temp
+      _shiftDown(arr, i, 0)
+    }    
+    function _shiftDown(arr, l, k){
+      let temp
+      while(2 * k + 1 < l){
+        let j = 2 * k + 1
+        if(j + 1 < l && arr[j] < arr[j + 1]){
+          j += 1
+        }
+        if(arr[j] > arr[k]){
+          temp = arr[k]
+          arr[k] = arr[j]
+          arr[j] = temp
+        }
+        k = j
+      }
+    }
   }
 }
 

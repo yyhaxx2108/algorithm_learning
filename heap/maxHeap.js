@@ -2,8 +2,8 @@ module.exports = class MaxHeap {
   constructor(arr = []){
     this.arr = JSON.parse(JSON.stringify(arr))
     const l = arr.length
-    const hl = Math.floor(arr.length / 2)
-    for(let i = hl - 1; i >= 0 ; i--){
+    const hl = Math.floor(arr.length / 2) - 1
+    for(let i = hl; i >= 0 ; i--){
       this.shiftDown(l, this.arr, i)
     }
   }
@@ -32,7 +32,7 @@ module.exports = class MaxHeap {
     }
   }
   shiftDown(l, arr, k){
-    let temp = arr[0]
+    let temp
     while(2 * k + 1 < l){
       let j = 2 * k + 1
       if(j + 1 < l){
