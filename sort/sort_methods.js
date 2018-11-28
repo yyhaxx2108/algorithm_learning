@@ -10,7 +10,9 @@ const sortMethods = {
     for (let i = 0; i < l; i++) {
       for (let k = 0; k < l - i; k++) {
         if (arr[k] > arr[k + 1]) {
-          [arr[k], arr[k + 1]] = [arr[k + 1], arr[k]];
+          tempC = arr[k]
+          arr[k] = arr[k + 1]
+          arr[k + 1] = tempC
         }
       }
     }
@@ -360,10 +362,10 @@ const sortMethods = {
    * 堆排序
    * @param {Array} arr 
    */
-  heapSort(arr){
+  heapSort(arr) {
     const l = arr.length - 1
     let heaps = new maxHeap(arr)
-    for(let i = l ; i >= 0; i--){
+    for (let i = l; i >= 0; i--) {
       arr[i] = heaps.pop()
     }
   }
