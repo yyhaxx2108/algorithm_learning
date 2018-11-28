@@ -83,7 +83,7 @@ function findKthLargest(nums, k){
   }
 }
 
-let arr = [3,2,3,1,2,4,5,5,6]
-let k = 4
+// let arr = [3,2,3,1,2,4,5,5,6]
+// let k = 4
 
-console.log(findKthLargest(arr, k))
+// console.log(findKthLargest(arr, k))
