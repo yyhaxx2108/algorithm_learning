@@ -2,17 +2,36 @@ const maxHeap = require('../heap/maxHeap.js')
 
 const sortMethods = {
   /**
- * 冒泡排序 
- * @param {Array} arr 待排序的数组
- */
+   * 冒泡排序 
+   * @param {Array} arr 待排序的数组
+   */
   bubbleSort(arr) {
     let l = arr.length
+    let tempC
     for (let i = 0; i < l; i++) {
       for (let k = 0; k < l - i; k++) {
         if (arr[k] > arr[k + 1]) {
           tempC = arr[k]
           arr[k] = arr[k + 1]
           arr[k + 1] = tempC
+        }
+      }
+    }
+  },
+
+  /**
+   * 希尔排序
+   * @param {Array} arr 
+   */
+  shellSort(arr){
+    const l = arr.length
+    let temp
+    for(let f = Math.floor(l / 2); f >= 1; f = Math.floor(f / 2)){
+      for(let i = f; i < l; i++){
+        for(let j = i - f; j >= 0 && arr[j] > arr[f + j]; j -= f){
+          temp = arr[j]
+          arr[j] = arr[f + j]
+          arr[f + j] = temp
         }
       }
     }
