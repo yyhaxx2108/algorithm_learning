@@ -46,6 +46,26 @@ class IndexMaxHeap {
   }
 
   /**
+   * 修改节点的值
+   * @param {num} i 节点索引
+   * @param {num} num 节点值
+   */
+  change(k, num){
+    // 判断k是否越界
+    if(k < 0 || k > this.k){
+      return 
+    }
+    // 找出k在索引数组里面的位置
+    let i = this.indexArr.indexOf(k)
+    // 修改原数组的值
+    this.arr[k] = num
+    // 上移数组
+    this.shiftUp(i)
+    // 下移数组
+    this.shiftDown(i)
+  }
+
+  /**
    * 上移当前节点
    * @param {num} i 
    */
@@ -96,17 +116,19 @@ class IndexMaxHeap {
 let arr = [12, 17, 15, 16, 3, 8, 2]
 const l = arr.length
 let indexMH = new IndexMaxHeap(arr)
-console.log(indexMH)
-for(let i = 0; i < l - 1; i++){
-  console.log(indexMH.pop())
-}
-console.log(indexMH)
-indexMH.insert(14)
-indexMH.insert(18)
+indexMH.change(1, 10)
+console.log(indexMH.pop())
+console.log(indexMH.pop())
+console.log(indexMH.pop())
+indexMH.change(4, 10)
+indexMH.insert(22)
+indexMH.insert(24)
+indexMH.insert(27)
 indexMH.insert(4)
 indexMH.insert(11)
-indexMH.insert(9)
-console.log(indexMH)
-for(let i = 0; i < 6; i++){
-  console.log(indexMH.pop())
-}
+indexMH.change(6, 7)
+console.log(indexMH.pop())
+console.log(indexMH.pop())
+console.log(indexMH.pop())
+console.log(indexMH.pop())
+console.log(indexMH.pop())
