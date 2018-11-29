@@ -21,9 +21,10 @@ class IndexMaxHeap {
     // 数组索引加一
     this.k++
     // 向原数组插入元素
-    this.arr.splice(this.k, 0, num)
+    // this.arr.splice(this.k, 0, num)
+    this.arr.push(num)
     // 向索引数组插入索引
-    this.indexArr.splice(this.k, 0, this.k)
+    this.indexArr.splice(this.k, 0, this.arr.length - 1)
     // 上移最后一个节点
     this.shiftUp(this.k)
   }
@@ -95,3 +96,17 @@ class IndexMaxHeap {
 let arr = [12, 17, 15, 16, 3, 8, 2]
 const l = arr.length
 let indexMH = new IndexMaxHeap(arr)
+console.log(indexMH)
+for(let i = 0; i < l - 1; i++){
+  console.log(indexMH.pop())
+}
+console.log(indexMH)
+indexMH.insert(14)
+indexMH.insert(18)
+indexMH.insert(4)
+indexMH.insert(11)
+indexMH.insert(9)
+console.log(indexMH)
+for(let i = 0; i < 6; i++){
+  console.log(indexMH.pop())
+}
