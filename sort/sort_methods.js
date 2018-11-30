@@ -8,7 +8,9 @@ const sortMethods = {
   bubbleSort(arr) {
     let l = arr.length
     let tempC
+    // 需要循环l次
     for (let i = 0; i < l; i++) {
+      // 找到最大值，并且将最大值放到数组l-i位置上
       for (let k = 0; k < l - i; k++) {
         if (arr[k] > arr[k + 1]) {
           tempC = arr[k]
@@ -24,10 +26,12 @@ const sortMethods = {
    * @param {Array} arr 
    */
   shellSort(arr){
-    const l = arr.length
+    const l = arr.length  // 将l定义为数组的长度
     let temp
+    // f定义为间隔长度
     for(let f = Math.floor(l / 2); f >= 1; f = Math.floor(f / 2)){
       for(let i = f; i < l; i++){
+        // 将当前位置的i与间隔f的前一位置比较，并且确定位置
         for(let j = i - f; j >= 0 && arr[j] > arr[f + j]; j -= f){
           temp = arr[j]
           arr[j] = arr[f + j]
