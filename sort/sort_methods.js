@@ -1,5 +1,9 @@
 const maxHeap = require('../heap/maxHeap.js')
 
+// 统一注释: 
+// @param l 长度
+// @param tempC 临时变量
+
 const sortMethods = {
   /**
    * 冒泡排序 
@@ -26,7 +30,7 @@ const sortMethods = {
    * @param {Array} arr 
    */
   shellSort(arr){
-    const l = arr.length  // 将l定义为数组的长度
+    const l = arr.length
     let temp
     // f定义为间隔长度
     for(let f = Math.floor(l / 2); f >= 1; f = Math.floor(f / 2)){
