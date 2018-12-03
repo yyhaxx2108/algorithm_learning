@@ -1,5 +1,22 @@
 const maxHeap = require('../heap/maxHeap.js')
 
+// 统一注释: 
+// @param l 长度
+// @param tempC 临时变量
+// @param arr  数组,整形
+
+
+// 交换函数
+const toolMethods = {
+  swap(arr, a, b){
+    arr[a] = arr[a] + arr[b];
+    arr[b] = arr[a] - arr[b];
+    arr[a] = arr[a] - arr[b];
+  },
+  
+
+}
+
 const sortMethods = {
   /**
    * 冒泡排序 
@@ -8,9 +25,9 @@ const sortMethods = {
   bubbleSort(arr) {
     let l = arr.length
     let tempC
-    // 需要循环l次
+    // 外层循环,循环整个数组的长度
     for (let i = 0; i < l; i++) {
-      // 找到最大值，并且将最大值放到数组l-i位置上
+      // 内层循环,找到最大值，并且将最大值放到数组l-i位置上
       for (let k = 0; k < l - i; k++) {
         if (arr[k] > arr[k + 1]) {
           tempC = arr[k]
@@ -25,14 +42,14 @@ const sortMethods = {
    * 希尔排序
    * @param {Array} arr 
    */
-  shellSort(arr){
-    const l = arr.length  // 将l定义为数组的长度
+  shellSort(arr) {
+    const l = arr.length
     let temp
     // f定义为间隔长度
-    for(let f = Math.floor(l / 2); f >= 1; f = Math.floor(f / 2)){
-      for(let i = f; i < l; i++){
+    for (let f = Math.floor(l / 2); f >= 1; f = Math.floor(f / 2)) {
+      for (let i = f; i < l; i++) {
         // 将当前位置的i与间隔f的前一位置比较，并且确定位置
-        for(let j = i - f; j >= 0 && arr[j] > arr[f + j]; j -= f){
+        for (let j = i - f; j >= 0 && arr[j] > arr[f + j]; j -= f) {
           temp = arr[j]
           arr[j] = arr[f + j]
           arr[f + j] = temp
@@ -400,24 +417,24 @@ const sortMethods = {
   heapSort1(arr) {
     const l = arr.length
     const hl = Math.floor(l / 2) - 1
-    for(let i = hl; i >= 0; i--){
+    for (let i = hl; i >= 0; i--) {
       _shiftDown(arr, l, i)
     }
     let temp
-    for(let i = l - 1; i > 0; i--){
+    for (let i = l - 1; i > 0; i--) {
       temp = arr[i]
       arr[i] = arr[0]
       arr[0] = temp
       _shiftDown(arr, i, 0)
-    }    
-    function _shiftDown(arr, l, k){
+    }
+    function _shiftDown(arr, l, k) {
       let temp
-      while(2 * k + 1 < l){
+      while (2 * k + 1 < l) {
         let j = 2 * k + 1
-        if(j + 1 < l && arr[j] < arr[j + 1]){
+        if (j + 1 < l && arr[j] < arr[j + 1]) {
           j += 1
         }
-        if(arr[j] > arr[k]){
+        if (arr[j] > arr[k]) {
           temp = arr[k]
           arr[k] = arr[j]
           arr[j] = temp
