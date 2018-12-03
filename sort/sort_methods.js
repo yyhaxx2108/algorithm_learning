@@ -116,7 +116,9 @@ const sortMethods = {
    * @param {Array} arr 
    */
   mergeSort(arr) {
+    // 缓存数组长度
     const l = arr.length
+    // 初始传入的是做边界值和又边界值
     _mergeSort(arr, 0, l - 1)
 
     /**
@@ -127,12 +129,16 @@ const sortMethods = {
      * @param {Integer} r 数组右边值
      */
     function _mergeSort(arr, l, r) {
+      // 当l = r时，当前arr只有1个元素，递归中止
       if (l >= r) {
         return
       }
+      // mid为正中或者中间偏左那个位置元素
       let mid = Math.floor((l + r) / 2)
+      // 递归调用左边和右边
       _mergeSort(arr, l, mid)
       _mergeSort(arr, mid + 1, r)
+      // 合并左边和右边
       _merge(arr, l, mid, r)
     }
 
@@ -144,12 +150,19 @@ const sortMethods = {
      * @param {Integer} r 数组右边值
      */
     function _merge(arr, l, mid, r) {
+      // 声明一个零时数组，并存储arr中[l, r]的值
       let tempArr = new Array(r - l + 1)
       for (let i = l; i <= r; i++) {
         tempArr[i - l] = arr[i]
       }
+
+      // i是左边数组开始的值，j是右边数组开始的值
       let i = l, j = mid + 1
+      // 对arr在[l, k]长度进行遍历，并从tempArr中给相应的位置放上正确的值
       for (let k = l; k <= r; k++) {
+        // 当 i > mid 说明左边数组的值已经遍历完全，可以直接将右边数组的值放到arr相应的位置
+        // 当 j > r 说明右边数组的值已经遍历完全，可以直接将左边数组的值放到arr相应的位置
+        // 将 tempArr[i - l] 与 tempArr[j - l]进行比较，在arr中放入较大的那个值，同时将其对应的索引右移
         if (i > mid) {
           arr[k] = tempArr[j - l];
           j++
@@ -174,8 +187,11 @@ const sortMethods = {
    */
   mergeSortBU(arr) {
     let l = arr.length
+    // 遍历层数，sz为递归最小单元的元素个数，初始时赋值为1
     for (let sz = 1; sz <= l; sz += sz) {
+      // 遍历当前层，所有需要归并的单元，并对其进行归并
       for (let i = 0; i + sz < l; i += sz + sz) {
+        // 最右边元素的索引应该取 Math.min(i + sz + sz - 1, l - 1)
         _merge(arr, i, i + sz - 1, Math.min(i + sz + sz - 1, l - 1))
       }
     }
@@ -240,10 +256,13 @@ const sortMethods = {
      * @param {Integer} r 
      */
     function _partition(arr, l, r) {
+      // v为最左边的值，这里将他放到正确位置，也就是说v左边的元素全部不大于v，右边元素不小于v
       let v = arr[l]
+      // v左边区间为[l + 1, j]
       let j = l
       let tempC
       for (let i = l + 1; i <= r; i++) {
+        // 当 arr[i] < v 时，arr[i]和arr[j + 1]交换，同时将左边区间像有移动一位
         if (arr[i] < v) {
           tempC = arr[j + 1]
           arr[j + 1] = arr[i]
@@ -251,6 +270,7 @@ const sortMethods = {
           j++
         }
       }
+      // 遍历一遍数组之后，交换j 与 v 的位置，从而让v处于正确位置
       tempC = arr[l]
       arr[l] = arr[j]
       arr[j] = tempC
@@ -290,6 +310,7 @@ const sortMethods = {
      */
     function _partition(arr, l, r) {
       let tempC
+      // 此处对近乎有序的数组进行优化
       let random = Math.round(Math.random() * (r - l)) + l
       tempC = arr[l]
       arr[l] = arr[random]
@@ -320,28 +341,39 @@ const sortMethods = {
     let l = arr.length
     _quickSort(arr, 0, l - 1)
     function _quickSort(arr, l, r) {
+      // 当 l = r 时说明arr只有一个元素，可以跳出递归
       if (l >= r) {
         return
       }
+      // 获取已经排序好的位置
       let p = _partition(arr, l, r)
+      // 递归对p左边和右边的元素找正确位置
       _quickSort(arr, l, p - 1)
       _quickSort(arr, p + 1, r)
     }
     function _partition(arr, l, r) {
       let tempC
+      // 取随机位置作为基准值,并放到最左边，防止近乎有序的数组退化成O(n*n)
       let random = Math.round(Math.random() * (r - l)) + l
       tempC = arr[l]
       arr[l] = arr[random]
       arr[random] = tempC
+
+      // 取最左边位置作为基准值，然后找出他的位置，并且返回
       let v = arr[l]
+      // 从i+1开始遍历数组，其中(l + 1, i)是小于等于v的区间 (j, r]为大于v的区间
       let i = l + 1, j = r
+      // 循环终止条件是i > j
       while (true) {
+        // 向右移动i，arr[i]小于v时，扩大小于v的区间
         while (i <= r && arr[i] < v) {
           i++
         }
+        // 向左移动j，arr[j] > v时，扩大大于v的区间
         while (j >= l + 1 && arr[j] > v) {
           j--
         }
+        // 两边移动之后，如果i 不大于 j，那么交换当前i 和 j 的位置，将左边和右边的区间同时扩大1，然后继续循环
         if (i > j) {
           break
         } else {
@@ -352,6 +384,7 @@ const sortMethods = {
           j--
         }
       }
+      // 将l和j元素进行交换，让l到达正确位置
       tempC = arr[l]
       arr[l] = arr[j]
       arr[j] = tempC
@@ -368,13 +401,23 @@ const sortMethods = {
 
     // 注意边界条件
     _quickSort(arr, 0, l - 1)
+    /**
+     * 对arr进行三路快排    
+     * @param {Array} arr 需要找出最大值的数组
+     * @param {Integer} l 数组的左边界
+     * @param {Integer} r 数组的右边界
+     */
     function _quickSort(arr, l, r) {
+      // 当 l = r 时说明arr只有一个元素，可以跳出递归
       if (l >= r) {
         return
       }
       let tempC
+      // v为arr的左值，也就是用来比较的基准值，[l, lt]为小于v的区间, [gt, r]为大于v的区间, i为当前读取值
       let v = arr[l], lt = l, gt = r + 1, i = l + 1
+      // 循环终止条件是i < gt其中gt的初始值为r + 1
       while (i < gt) {
+        // 如果arr[i]小于v时将arr[i]和lt+1那个值交换，同时将lt++， i++；如果arr[i]大于v时将当前值和gt-1的值交换，同时gt--；如果arr[i]等于v，那么将i++即可
         if (arr[i] < v) {
           tempC = arr[i]
           arr[i] = arr[lt + 1]
@@ -390,10 +433,13 @@ const sortMethods = {
           i++
         }
       }
+      // 最后得将v与lt位置的元素进行交换，使v放到他正确的位置
       tempC = arr[l]
       arr[l] = arr[lt]
       arr[lt] = tempC
+      // 继续递归对左边进行排序
       _quickSort(arr, l, lt - 1)
+      // 继续递归对右边进行排序
       _quickSort(arr, gt, r)
     }
   },
@@ -415,26 +461,39 @@ const sortMethods = {
    * @param {Array} arr 
    */
   heapSort1(arr) {
+    // 缓存数组长度
     const l = arr.length
+    // 找到需要shiftDown的元素，观察可知道Math.floor(l / 2) - 1需要shiftDown
     const hl = Math.floor(l / 2) - 1
-    for (let i = hl; i >= 0; i--) {
+    // 进行原地堆化
+    for(let i = hl; i >= 0; i--){
       _shiftDown(arr, l, i)
     }
     let temp
-    for (let i = l - 1; i > 0; i--) {
+    // 找出最大值
+    for(let i = l - 1; i > 0; i--){
       temp = arr[i]
       arr[i] = arr[0]
       arr[0] = temp
       _shiftDown(arr, i, 0)
     }
-    function _shiftDown(arr, l, k) {
+    /**
+     * 
+     * @param {Array} arr 需要shiftDown的数组
+     * @param {Integer} l 需要shiftDown的长度
+     * @param {Integer} k 需要堆化的下标
+     */   
+    function _shiftDown(arr, l, k){
       let temp
-      while (2 * k + 1 < l) {
+      // 判断k是否存在左子节点
+      while(2 * k + 1 < l){
         let j = 2 * k + 1
-        if (j + 1 < l && arr[j] < arr[j + 1]) {
+        // 判读是否存在比左子节点大的右子节点，如果存在赋值给j
+        if(j + 1 < l && arr[j] < arr[j + 1]){
           j += 1
         }
-        if (arr[j] > arr[k]) {
+        // 判断当前节点是否比子节点小，如果小则进行交换
+        if(arr[j] > arr[k]){
           temp = arr[k]
           arr[k] = arr[j]
           arr[j] = temp

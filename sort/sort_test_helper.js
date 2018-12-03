@@ -40,6 +40,24 @@ const sortTestHelper = {
   },
 
   /**
+   * 生成大量重复元素的数组
+   * @param {Integer} n 
+   * @param {Integer} sameTime 
+   */
+  generateMostSameArray(n, sameTime){
+    let arr = new Array(n)
+    let c = Math.round(Math.random() * n)
+    for(let i = 0; i < n; i++) {
+      arr[i] = c
+    }
+    for(let i =0; i <= sameTime; i++) {
+      let x = Math.round(Math.random() * n)
+      arr[x] = Math.round(Math.random() * n)
+    }
+    return arr
+  },
+
+  /**
    * 算法所花费时间
    * @param {String} name 算法名称
    * @param {Arrary} arr 待排序的数组
