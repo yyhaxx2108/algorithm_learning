@@ -87,9 +87,11 @@ function findKthLargest(nums, k){
 function binarySearch(arr, t){
   // 初始化左值和右值
   let l = 0, r = arr.length - 1
+  let mid
   // 开始在 [l, r] 中查找
   while(l <= r){
-    let mid = Math.floor((l + r) / 2)
+    // let mid = Math.floor((l + r) / 2) 这个写法存在bug，l + r 可能存在溢出
+    mid = l + Math.floor((r - l) / 2)
     if(arr[mid] === t){
       return mid
     }else if (arr[mid] > t){
@@ -103,7 +105,7 @@ function binarySearch(arr, t){
 
 
 let arr =  [1, 3, 5, 6, 7, 9, 12, 16]
-let t = 124
+let t = 14
 console.log(binarySearch(arr, t))
 // let arr = [3,2,3,1,2,4,5,5,6]
 // let k = 4
