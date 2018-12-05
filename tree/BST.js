@@ -39,17 +39,69 @@ class BST{
 
   // 先序遍历
   preOrderTraverseNode(callback){
-    this._preOrderTraverseNode(this.rootNode, callback)
+    if(this.rootNode.key){
+      this._preOrderTraverseNode(this.rootNode, callback)
+    }
   }
 
   // 中序遍历
   inOrderTraverseNode(callback){
-    this._inOrderTraverseNode(this.rootNode, callback)
+    if(this.rootNode.key){
+      this._inOrderTraverseNode(this.rootNode, callback)
+    }
   }
 
   // 后序遍历
   postOrderTraverseNode(callback){
-    this._postOrderTraverseNode(this.rootNode, callback)
+    if(this.rootNode.key){
+      this._postOrderTraverseNode(this.rootNode, callback)
+    }
+  }
+
+  // 横向遍历
+  rawOrderTraverseNode(callback){
+    // 数组堆栈
+    let arr = []
+    if(this.rootNode.key){
+      arr.push(this.rootNode)
+      this._rawOrderTraverseNode(this.rootNode, callback, arr)
+    }
+  }
+
+  // 取出最大key及对应的值
+  getMaxKeyAndValue(){
+    if(this.rootNode.key){
+      const node = this._getMaxKeyAndValue(this.rootNode)
+      return {
+        key: node.key,
+        value: node.value
+      }
+    }
+  }
+
+  // 取出最小key及对应的值
+  getMinKeyAndValue(){
+    if(this.rootNode.key){
+      const node = this._getMinKeyAndValue(this.rootNode)
+      return {
+        key: node.key,
+        value: node.value
+      }
+    }
+  }
+
+  // 删除最大节点
+  removeMaxKeyNode(){
+    if(this.rootNode.key){
+      this.rootNode = this._removeMaxKeyNode(this.rootNode)
+    }
+  }
+
+  // 删除最小节点
+  removeMinKeyNode(){
+    if(this.rootNode.key){
+      this.rootNode = this._removeMinKeyNode(this.rootNode)
+    }
   }
 
   // 添加节点的内部调用
@@ -136,6 +188,56 @@ class BST{
     }
     callback(node)
   }
+
+  _rawOrderTraverseNode(node, callback, arr){
+    while(arr.length > 0) {
+      // 取出队列的第一个node
+      const nowNode = arr.shift()
+      // 调用callback方法
+      callback(nowNode)
+      // 将取出node的子节点分别压入队列
+      if(nowNode.left){
+        arr.push(nowNode.left)
+      }
+      if(nowNode.right){
+        arr.push(nowNode.right)
+      }
+    }
+  }
+
+  _getMaxKeyAndValue(node){
+    if(node.right){
+      return this._getMaxKeyAndValue(node.right)
+    }else{
+      return node
+    }
+  }
+
+  _getMinKeyAndValue(node){
+    if(node.left){
+      return this._getMinKeyAndValue(node.left)
+    }else{
+      return node
+    }
+  }
+
+  _removeMaxKeyNode(node){
+    if(node.right === null){
+      return node.left
+    }else{
+      node.right = this._removeMaxKeyNode(node.right)
+      return node
+    }
+  }
+
+  _removeMinKeyNode(node){
+    if(node.left === null){
+      return node.right
+    }else{
+      node.left = this._removeMaxKeyNode(node.left)
+      return node
+    }
+  }
 }
 
 // 测试代码
@@ -149,18 +251,34 @@ for (let i = 0; i < 10; i++){
   }
   bst.insert(obj)
 }
-console.log(JSON.stringify(bst))
-console.log(bst.contain(42))
-console.log(bst.search(42))
-console.log('先序')
-bst.preOrderTraverseNode(function(node){
-  console.log(node.key)
-})
-console.log('中序')
-bst.inOrderTraverseNode(function(node){
-  console.log(node.key)
-})
-console.log('后序')
-bst.postOrderTraverseNode(function(node){
-  console.log(node.key)
-})
+// console.log(JSON.stringify(bst))
+// console.log(bst.contain(42))
+// console.log(bst.search(42))
+// console.log('先序')
+// bst.preOrderTraverseNode(function(node){
+//   console.log(node.key)
+// })
+// console.log('中序')
+// bst.inOrderTraverseNode(function(node){
+//   console.log(node.key)
+// })
+// console.log('后序')
+// bst.postOrderTraverseNode(function(node){
+//   console.log(node.key)
+// })
+// console.log('横向遍历')
+// bst.rawOrderTraverseNode(function(node){
+//   console.log(node.key)
+// })
+// console.log('最大key')
+// console.log(bst.getMaxKeyAndValue())
+// console.log('最小key')
+// console.log(bst.getMinKeyAndValue())
+// console.log('删除最大节点')
+// bst.removeMaxKeyNode()
+// console.log('删除最大节点')
+// bst.removeMinKeyNode()
+// console.log('中序')
+// bst.inOrderTraverseNode(function(node){
+//   console.log(node.key)
+// })
