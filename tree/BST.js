@@ -104,6 +104,13 @@ class BST{
     }
   }
 
+  // 删除节点
+  removeNode(key){
+    if(this.rootNode.key){
+      this.rootNode = _removeNode(this.rootNode, key)
+    }
+  }
+
   // 添加节点的内部调用
   _insert(node, newNode){
     if(newNode.key === node.key){
@@ -236,6 +243,32 @@ class BST{
     }else{
       node.left = this._removeMaxKeyNode(node.left)
       return node
+    }
+  }
+
+  _removeNode(node, key){
+    if(node === null){
+      return 
+    }else{
+      if(key < node.key){
+        node.left = this._removeNode(node.left, key)
+        return node
+      }else if (key > node.key){
+        node.right = this._removeNode(node.right, key)
+        return node
+      }else{
+        if(node.left === null){
+          return node.right
+        }else if(node.right === null){
+          return node.left
+        }else{
+          let replace = this._getMinKeyAndValue(node)
+          node = this._removeMinKeyNode(node)
+          node.key = replace.key
+          node.value = replace.value
+          return node
+        }
+      }
     }
   }
 }
