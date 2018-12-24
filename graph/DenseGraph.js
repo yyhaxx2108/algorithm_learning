@@ -35,7 +35,7 @@ class DenseGraph {
     }
     this.g[v][w] = true
     if(!this.directived){
-      this.g[v][w] = true
+      this.g[w][v] = true
     }
     this.m++
   }
