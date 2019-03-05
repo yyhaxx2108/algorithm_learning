@@ -1,5 +1,4 @@
 class IndexMaxHeap {
-
   constructor(arr){
     // 原数组
     this.arr = arr
@@ -12,7 +11,6 @@ class IndexMaxHeap {
       this.shiftDown(i)
     }
   }
-
   /**
    * 插入节点
    * @param {num} num 

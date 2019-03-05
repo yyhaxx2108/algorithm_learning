@@ -13,8 +13,6 @@ const toolMethods = {
     arr[b] = arr[a] - arr[b];
     arr[a] = arr[a] - arr[b];
   },
-  
-
 }
 
 const sortMethods = {
@@ -501,6 +499,26 @@ const sortMethods = {
         k = j
       }
     }
+  },
+  /**
+   * 栈排序
+   * @param {Array} arr 
+   */
+  stackSort(arr){
+    const b = []
+    let temp 
+    while (arr.length > 0) {
+      temp = arr.pop()
+      if(b.length > 0){
+        while(temp < b[b.length - 1]){
+          arr.push(b.pop())
+        }
+        b.push(temp)
+      }else{
+        b.push(temp)
+      }
+    }
+    arr = b
   }
 }
 
