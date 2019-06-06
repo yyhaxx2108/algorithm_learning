@@ -21,6 +21,7 @@ function main() {
   let arr11 = JSON.parse(JSON.stringify(arr))
   let arr12 = JSON.parse(JSON.stringify(arr))
   let arr13 = JSON.parse(JSON.stringify(arr))
+  let arr14 = JSON.parse(JSON.stringify(arr))
 
   sortTestHelper.testSort('冒泡排序', arr1, n, sortMethods.bubbleSort)
   sortTestHelper.testSort('选择排序', arr2, n, sortMethods.selectionSort)
@@ -35,6 +36,7 @@ function main() {
   sortTestHelper.testSort('希尔排序', arr12, n, sortMethods.shellSort)
   sortTestHelper.testSort('堆排序', arr11, n, sortMethods.heapSort)
   sortTestHelper.testSort('原地堆排序', arr13, n, sortMethods.heapSort1)
+  sortTestHelper.testSort('栈排序', arr14, n, sortMethods.stackSort)
 
 }
 
